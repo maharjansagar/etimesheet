@@ -1,0 +1,33 @@
+md-content(layout='')
+  toolbar
+.departments-list(layout='row')
+  span(flex='')
+  div(layout='column', flex='50')
+    h1 Departments
+    form.md-whiteframe-z1(ng-submit='save()', name='form', novalidate='', layout-padding='')
+      p Add a department
+      md-input-container
+        label Name
+        input(ng-model='newDepartment.name', placeholder='Name')
+      md-input-container
+        label Description
+        input(ng-model='newDepartment.description', placeholder='Description', type='textarea')
+      input.md-button(type='submit', value='Add')
+    
+    table
+      tr
+        th S.N
+        th
+          a(href='#', ng-click="sortType = 'name'; sortReverse = !sortReverse") Name
+        th
+          a(href='#', ng-click="sortType = 'description'; sortReverse = !sortReverse") Description
+      tr(ng-repeat ='department in departments |  orderBy:sortType:sortReverse')
+        td {{$index + 1}}
+        td {{department.name}}
+        td {{department.description}}
+        td
+          a(href='/departments/{{department._id}}')  Edit 
+          button(ng-click='remove(department._id)') Remove
+
+    p Total number of departments: {{departments.length}}
+  span(flex='')
